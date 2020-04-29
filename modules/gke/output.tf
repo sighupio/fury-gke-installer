@@ -1,6 +1,6 @@
 output "cluster_endpoint" {
   description = "The endpoint for your Kubernetes API server"
-  value       = module.gke.endpoint
+  value       = "https://${module.gke.endpoint}"
 }
 
 output "cluster_certificate_authority" {
