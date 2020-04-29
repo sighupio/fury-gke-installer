@@ -33,6 +33,8 @@ module "gke" {
   enable_private_nodes          = true
   remove_default_node_pool      = true
   monitoring_service            = "none"
+  logging_service               = "none"
+  http_load_balancing           = false
 
   master_authorized_networks = [
     {

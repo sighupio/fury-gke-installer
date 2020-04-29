@@ -2,7 +2,7 @@
 
 **Installer** - *Managed Cluster Installer* - GKE
 
-![GKE](https://storage.googleapis.com/mercurie-blog-media/2020/02/gke-1.png)
+![GKE](https://www.pngkit.com/png/detail/442-4428479_google-kubernetesengine-google-gke-logo.png)
 
 ## What is this?
 
