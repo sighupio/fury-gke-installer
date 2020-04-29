@@ -19,18 +19,19 @@ module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
   version = "8.1.0"
 
-  project_id               = data.google_client_config.current.project
-  name                     = var.cluster_name
-  kubernetes_version       = var.cluster_version
-  region                   = data.google_client_config.current.region
-  regional                 = true
-  network                  = var.network
-  subnetwork               = var.subnetworks[0]
-  ip_range_pods            = var.subnetworks[1]
-  ip_range_services        = var.subnetworks[2]
-  enable_private_endpoint  = true
-  enable_private_nodes     = true
-  remove_default_node_pool = true
+  project_id                    = data.google_client_config.current.project
+  name                          = var.cluster_name
+  kubernetes_version            = var.cluster_version
+  region                        = data.google_client_config.current.region
+  regional                      = true
+  network                       = var.network
+  subnetwork                    = var.subnetworks[0]
+  ip_range_pods                 = var.subnetworks[1]
+  ip_range_services             = var.subnetworks[2]
+  deploy_using_private_endpoint = true
+  enable_private_endpoint       = true
+  enable_private_nodes          = true
+  remove_default_node_pool      = true
 
   master_authorized_networks = [
     {
