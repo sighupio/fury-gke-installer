@@ -1,11 +1,11 @@
 output "cluster_endpoint" {
   description = "The endpoint for your Kubernetes API server"
-  value       = "TODO"
+  value       = module.gke.endpoint
 }
 
 output "cluster_certificate_authority" {
   description = "The base64 encoded certificate data required to communicate with your cluster. Add this to the certificate-authority-data section of the kubeconfig file for your cluster"
-  value       = "TODO"
+  value       = module.gke.ca_certificate
 }
 
 output "operator_ssh_user" {
