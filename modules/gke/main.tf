@@ -4,5 +4,7 @@ terraform {
     google      = ">= 2.9.0"
     google-beta = ">= 2.9.0"
     kubernetes  = ">= 1.11.1"
+    null        = ">= 2.1"
+    random      = ">= 2.2"
   }
 }
