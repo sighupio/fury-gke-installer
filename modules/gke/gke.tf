@@ -43,6 +43,10 @@ module "gke" {
     },
   ]
 
+  node_pools_tags = {
+    all = ["sighup-io-gke-cluster-${var.cluster_name}"]
+  }
+
   node_pools_metadata = {
     all = {
       sshKeys = "ubuntu:${var.ssh_public_key}"
@@ -65,4 +69,17 @@ module "gke" {
       version              = worker.version != null ? worker.version : var.cluster_version
     }
   ]
+}
+
+resource "google_compute_firewall" "ssh_to_nodes" {
+  name          = "ssh-access-to-${var.cluster_name}-gke-cluster-nodes"
+  network       = var.network
+  source_ranges = [var.dmz_cidr_range]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
 }
