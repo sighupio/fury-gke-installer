@@ -7,7 +7,7 @@ variable "ssh_public_key" {}
 variable "node_pools" { type = list }
 
 module "my-cluster" {
-  source = "../modules/eks"
+  source = "../../modules/gke"
 
   cluster_version = var.cluster_version
   cluster_name    = var.cluster_name
@@ -18,33 +18,28 @@ module "my-cluster" {
   node_pools      = var.node_pools
 }
 
-output "kube_config" {
+data "google_client_config" "current" {}
+
+output "kubeconfig" {
   sensitive = true
   value     = <<EOT
 apiVersion: v1
 clusters:
 - cluster:
-    server: ${module.my-cluster.cluster_endpoint}
     certificate-authority-data: ${module.my-cluster.cluster_certificate_authority}
-  name: kubernetes
+    server: ${module.my-cluster.cluster_endpoint}
+  name: gke
 contexts:
 - context:
-    cluster: kubernetes
-    user: aws
-  name: aws
-current-context: aws
+    cluster: gke
+    user: gke
+  name: gke
+current-context: gke
 kind: Config
 preferences: {}
 users:
-- name: aws
+- name: gke
   user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1alpha1
-      command: aws
-      args:
-        - "eks"
-        - "get-token"
-        - "--cluster-name"
-        - "${var.cluster_name}"
+    token: ${data.google_client_config.current.access_token}
 EOT
 }
