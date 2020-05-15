@@ -83,3 +83,17 @@ resource "google_compute_firewall" "ssh_to_nodes" {
 
   target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
 }
+
+resource "google_compute_firewall" "gke_webhook" {
+  name          = "control-plane-access-to-${var.cluster_name}-worker-nodes"
+  description   = "Allow access from GKE masters to worker nodes to allow WebHook functionalities"
+  network       = var.network
+  source_ranges = [module.gke.master_ipv4_cidr_block]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
+}
