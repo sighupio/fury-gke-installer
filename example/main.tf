@@ -7,7 +7,7 @@ variable "ssh_public_key" {}
 variable "node_pools" { type = list }
 
 module "my-cluster" {
-  source = "../../modules/gke"
+  source = "../modules/gke"
 
   cluster_version = var.cluster_version
   cluster_name    = var.cluster_name
