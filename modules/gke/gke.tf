@@ -13,6 +13,22 @@ locals {
     )
   ]
   node_pools_labels = zipmap(local.node_names, local.temp_node_pools_labels)
+  node_taint_effect = {
+    "NoExecute" = "NO_EXECUTE",
+    "NoSchedule" = "NO_SCHEDULE"
+    "PreferNoSchedule" = "PREFER_NO_SCHEDULE"
+  }
+  temp_node_pools_taints = [
+    for node_pool in var.node_pools : [
+      for taint in node_pool.taints :
+        {
+          "key" = element(split("=", taint), 0),
+          "value" = element(split(":", element(split("=", taint), 1)), 0),
+          "effect" = lookup(local.node_taint_effect, element(split(":", taint), 1)),
+        }
+    ]
+  ]
+  node_pools_taints = zipmap(local.node_names, local.temp_node_pools_taints)
 }
 
 module "gke" {
@@ -54,6 +70,8 @@ module "gke" {
   }
 
   node_pools_labels = local.node_pools_labels
+
+  node_pools_taints = local.node_pools_taints
 
   node_pools = [
     for worker in var.node_pools :
