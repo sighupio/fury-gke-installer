@@ -43,10 +43,12 @@ module "gke" {
   kubernetes_version            = var.cluster_version
   region                        = data.google_client_config.current.region
   regional                      = true
+  network_project_id            = var.network_project_id
   network                       = var.network
   subnetwork                    = var.subnetworks[0]
   ip_range_pods                 = var.subnetworks[1]
   ip_range_services             = var.subnetworks[2]
+  master_ipv4_cidr_block        = var.master_ipv4_cidr_block
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
   enable_private_nodes          = true
