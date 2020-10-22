@@ -1,11 +1,11 @@
 terraform {
   required_version = ">= 0.12.0"
   required_providers {
-    google      = ">= 2.9.0"
-    google-beta = ">= 2.9.0"
-    kubernetes  = ">= 1.11.1"
-    null        = ">= 2.1"
-    random      = ">= 2.2"
-    external    = "~> 2.0"
+    google      = ">= 3.44.0"
+    google-beta = ">= 3.44.0"
+    kubernetes  = ">= 1.13.2"
+    null        = ">= 3.0.0"
+    random      = ">= 3.0.0"
+    external    = ">= 2.0.0"
   }
 }
