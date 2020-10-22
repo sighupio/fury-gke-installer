@@ -33,7 +33,7 @@ locals {
 
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
-  version = "8.1.0"
+  version = "12.0.0"
 
   project_id                    = data.google_client_config.current.project
   name                          = var.cluster_name
@@ -59,6 +59,8 @@ module "gke" {
     },
   ]
 
+  master_global_access_enabled = false
+
   node_pools_tags = {
     all = ["sighup-io-gke-cluster-${var.cluster_name}"]
   }
@@ -72,6 +74,8 @@ module "gke" {
   node_pools_labels = local.node_pools_labels
 
   node_pools_taints = local.node_pools_taints
+
+  node_metadata = "SECURE"
 
   node_pools = [
     for worker in var.node_pools :
