@@ -6,5 +6,6 @@ terraform {
     kubernetes  = ">= 1.11.1"
     null        = ">= 2.1"
     random      = ">= 2.2"
+    external    = "~> 2.0"
   }
 }
