@@ -5,6 +5,8 @@ locals {
   temp_node_pools_labels = [
     for node_pool in var.node_pools :
     merge(
+      var.tags,
+      node_pool.tags,
       node_pool.labels,
       {
         "sighup.io/cluster"   = var.cluster_name,
@@ -37,6 +39,7 @@ module "gke" {
 
   project_id                    = data.google_client_config.current.project
   name                          = var.cluster_name
+  cluster_resource_labels       = var.tags
   kubernetes_version            = var.cluster_version
   region                        = data.google_client_config.current.region
   regional                      = true
