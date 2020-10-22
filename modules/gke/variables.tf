@@ -39,8 +39,15 @@ variable "node_pools" {
     volume_size   = number
     labels        = map(string)
     taints        = list(string)
+    tags          = map(string)
   }))
   default = []
+}
+
+variable "tags" {
+  type        = map
+  description = "The tags to apply to all resources"
+  default     = {}
 }
 
 variable "resource_group_name" {
