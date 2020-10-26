@@ -48,7 +48,7 @@ module "gke" {
   subnetwork                    = var.subnetworks[0]
   ip_range_pods                 = var.subnetworks[1]
   ip_range_services             = var.subnetworks[2]
-  add_cluster_firewall_rules    = var.gke_add_cluster_firewall_rules
+  # add_cluster_firewall_rules    = var.gke_add_cluster_firewall_rules # Activate this flag once using gke upstream version > 9.0.0
   master_ipv4_cidr_block        = var.gke_master_ipv4_cidr_block
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
