@@ -18,18 +18,6 @@ variable "subnetworks" {
   description = "List of subnets where the cluster will be hosted"
 }
 
-variable "network_project_id" {
-  type        = string
-  description = "The project ID of the shared VPC's host (for shared vpc support)"
-  default     = ""
-}
-
-variable "master_ipv4_cidr_block" {
-  type        = string
-  description = "The IP range in CIDR notation to use for the hosted master network"
-  default     = "10.0.0.0/28"
-}
-
 variable "dmz_cidr_range" {
   type        = string
   description = "Network CIDR range from where cluster control plane will be accessible"
@@ -66,4 +54,16 @@ variable "resource_group_name" {
   type        = string
   description = "Resource group name where every resource will be placed. Required only in AKS installer (*)"
   default     = ""
+}
+
+variable "gke_network_project_id" {
+  type        = string
+  description = "[GKE] The project ID of the shared VPC's host (for shared vpc support)"
+  default     = ""
+}
+
+variable "gke_master_ipv4_cidr_block" {
+  type        = string
+  description = "[GKE] The IP range in CIDR notation to use for the hosted master network"
+  default     = "10.0.0.0/28"
 }
