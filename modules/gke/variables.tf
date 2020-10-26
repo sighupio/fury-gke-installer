@@ -56,6 +56,8 @@ variable "resource_group_name" {
   default     = ""
 }
 
+// Google Cloud specific variables
+
 variable "gke_network_project_id" {
   type        = string
   description = "[GKE] The project ID of the shared VPC's host (for shared vpc support)"
@@ -66,4 +68,16 @@ variable "gke_master_ipv4_cidr_block" {
   type        = string
   description = "[GKE] The IP range in CIDR notation to use for the hosted master network"
   default     = "10.0.0.0/28"
+}
+
+variable "gke_add_additional_firewall_rules" {
+  type        = bool
+  description = "[GKE] Create additional firewall rules"
+  default     = true
+}
+
+variable "gke_add_cluster_firewall_rules" {
+  type        = bool
+  description = "[GKE] Create additional firewall rules (Upstream GKE module)"
+  default     = false
 }

@@ -48,6 +48,7 @@ module "gke" {
   subnetwork                    = var.subnetworks[0]
   ip_range_pods                 = var.subnetworks[1]
   ip_range_services             = var.subnetworks[2]
+  add_cluster_firewall_rules    = var.gke_add_cluster_firewall_rules
   master_ipv4_cidr_block        = var.gke_master_ipv4_cidr_block
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
@@ -99,6 +100,7 @@ module "gke" {
 }
 
 resource "google_compute_firewall" "ssh_to_nodes" {
+  count         = var.gke_add_additional_firewall_rules ? 1 : 0
   name          = "ssh-access-to-${var.cluster_name}-gke-cluster-nodes"
   network       = var.network
   source_ranges = [var.dmz_cidr_range]
@@ -112,6 +114,7 @@ resource "google_compute_firewall" "ssh_to_nodes" {
 }
 
 resource "google_compute_firewall" "gke_webhook" {
+  count         = var.gke_add_additional_firewall_rules ? 1 : 0
   name          = "control-plane-access-to-${var.cluster_name}-worker-nodes"
   description   = "Allow access from GKE masters to worker nodes to allow WebHook functionalities"
   network       = var.network
