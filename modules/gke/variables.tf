@@ -81,3 +81,9 @@ variable "gke_add_cluster_firewall_rules" {
   description = "[GKE] Create additional firewall rules (Upstream GKE module)"
   default     = false
 }
+
+variable "gke_disable_default_snat" {
+  type        = bool
+  description = "[GKE] Whether to disable the default SNAT to support the private use of public IP addresses"
+  default     = false
+}
