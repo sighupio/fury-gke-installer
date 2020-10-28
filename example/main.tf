@@ -5,6 +5,7 @@ variable "subnetworks" { type = list }
 variable "dmz_cidr_range" {}
 variable "ssh_public_key" {}
 variable "node_pools" { type = list }
+variable "tags" { type = map }
 
 module "my-cluster" {
   source = "../modules/gke"
@@ -16,6 +17,7 @@ module "my-cluster" {
   ssh_public_key  = var.ssh_public_key
   dmz_cidr_range  = var.dmz_cidr_range
   node_pools      = var.node_pools
+  tags            = var.tags
 }
 
 data "google_client_config" "current" {}
