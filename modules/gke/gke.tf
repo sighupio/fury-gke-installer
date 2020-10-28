@@ -48,6 +48,7 @@ module "gke" {
   subnetwork                    = var.subnetworks[0]
   ip_range_pods                 = var.subnetworks[1]
   ip_range_services             = var.subnetworks[2]
+  disable_default_snat          = var.gke_disable_default_snat
   add_cluster_firewall_rules    = var.gke_add_cluster_firewall_rules
   master_ipv4_cidr_block        = var.gke_master_ipv4_cidr_block
   deploy_using_private_endpoint = true
