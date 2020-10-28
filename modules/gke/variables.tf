@@ -87,3 +87,33 @@ variable "gke_disable_default_snat" {
   description = "[GKE] Whether to disable the default SNAT to support the private use of public IP addresses"
   default     = false
 }
+
+# Configure IP Masquerade
+
+variable "gke_configure_ip_masq" {
+  type        = bool
+  description = "[GKE] Enables the installation of ip masquerading, which is usually no longer required when using aliasied IP addresses. IP masquerading uses a kubectl call, so when you have a private cluster, you will need access to the API server."
+  default     = false
+}
+
+variable "gke_ip_masq_link_local" {
+  type        = bool
+  description = "[GKE] Whether to masquerade traffic to the link-local prefix (169.254.0.0/16)."
+  default     = false
+}
+
+variable "gke_ip_masq_resync_interval" {
+  type        = string
+  description = "[GKE] The interval at which the agent attempts to sync its ConfigMap file from the disk."
+  default     = "60s"
+}
+
+variable "gke_non_masquerade_cidrs" {
+  type        = list
+  description = "[GKE] List of strings in CIDR notation that specify the IP address ranges that do not use IP masquerading."
+  default = [
+    "10.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16"
+  ]
+}
