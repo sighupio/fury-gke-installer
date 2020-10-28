@@ -51,6 +51,7 @@ module "gke" {
   disable_default_snat          = var.gke_disable_default_snat
   add_cluster_firewall_rules    = var.gke_add_cluster_firewall_rules
   master_ipv4_cidr_block        = var.gke_master_ipv4_cidr_block
+  default_max_pods_per_node     = var.gke_default_max_pods_per_node
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
   enable_private_nodes          = true

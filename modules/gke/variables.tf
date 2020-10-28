@@ -87,3 +87,9 @@ variable "gke_disable_default_snat" {
   description = "[GKE] Whether to disable the default SNAT to support the private use of public IP addresses"
   default     = false
 }
+
+variable "gke_default_max_pods_per_node" {
+  type        = number
+  description = "[GKE] The maximum number of pods to schedule per node"
+  default     = 110
+}
