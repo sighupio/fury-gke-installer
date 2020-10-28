@@ -2,8 +2,9 @@ cluster_name    = "my-cluster"
 cluster_version = "1.15.12-gke.6"
 network         = "gke-vpc"
 subnetworks     = ["gke-subnet", "gke-subnet-pod", "gke-subnet-svc"]
-ssh_public_key = "ssh-rsa example"
-dmz_cidr_range = "10.10.0.0/16"
+ssh_public_key  = "ssh-rsa example"
+dmz_cidr_range  = "10.10.0.0/16"
+tags            = {}
 node_pools = [
   {
     name : "node-pool-1"
@@ -17,7 +18,8 @@ node_pools = [
       "sighup.io/fury-release" : "v1.3.0"
     }
     taints : []
-
+    tags : {}
+    max_pods : null # Default
   },
   {
     name : "node-pool-2"
@@ -30,5 +32,7 @@ node_pools = [
     taints : [
       "sighup.io/role=app:NoSchedule"
     ]
+    tags : {}
+    max_pods : 100 # Default
   }
 ]
