@@ -59,10 +59,10 @@ module "gke" {
   logging_service               = "none"
   http_load_balancing           = false
 
-  configure_ip_masq           = gke_configure_ip_masq
-  ip_masq_link_local          = gke_ip_masq_link_local
-  ip_masq_resync_interval     = gke_ip_masq_resync_interval
-  ip_gke_non_masquerade_cidrs = gke_ip_gke_non_masquerade_cidrs
+  configure_ip_masq           = var.gke_configure_ip_masq
+  ip_masq_link_local          = var.gke_ip_masq_link_local
+  ip_masq_resync_interval     = var.gke_ip_masq_resync_interval
+  ip_gke_non_masquerade_cidrs = var.gke_ip_gke_non_masquerade_cidrs
 
   master_authorized_networks = [
     {
