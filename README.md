@@ -18,4 +18,4 @@ The updated installer documentation is available in the [Kubernetes Fury Distrib
 For license details please see [LICENSE](LICENSE)
 
 
-[gke installer docs]: http://kfd-docs-feature-GKE-installer.surge.sh/docs/installers/managed/gke/
+[gke installer docs]: https://docs.kubernetesfury.com/docs/installers/managed/gke/
