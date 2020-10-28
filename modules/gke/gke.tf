@@ -96,6 +96,7 @@ module "gke" {
       disk_size_gb         = worker.volume_size
       auto_upgrade         = false
       version              = worker.version != null ? worker.version : var.cluster_version
+      max_pods_per_node    = worker.max_pods
     }
   ]
 }
