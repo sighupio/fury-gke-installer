@@ -13,6 +13,7 @@ node_pools = [
     max_size : 1
     instance_type : "n1-standard-1"
     volume_size : 100
+    subnetworks : null
     labels : {
       "sighup.io/role" : "app"
       "sighup.io/fury-release" : "v1.3.0"
@@ -28,6 +29,7 @@ node_pools = [
     max_size : 1
     instance_type : "n1-standard-2"
     volume_size : 50
+    subnetworks : null
     labels : {}
     taints : [
       "sighup.io/role=app:NoSchedule"
