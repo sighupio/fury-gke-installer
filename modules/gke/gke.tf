@@ -94,7 +94,7 @@ module "gke" {
       min_count            = worker.min_size
       max_count            = worker.max_size
       disk_size_gb         = worker.volume_size
-      node_locations       = worker.subnetworks # subnetworks are translated to GKE to node_locations with are availability zones
+      node_locations       = worker.subnetworks != null && length(worker.subnetworks) > 0 ? worker.subnetworks[0] : ""
       auto_upgrade         = false
       version              = worker.version != null ? worker.version : var.cluster_version
       max_pods_per_node    = worker.max_pods
