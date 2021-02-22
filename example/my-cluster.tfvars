@@ -1,9 +1,9 @@
-cluster_name    = "my-cluster"
-cluster_version = "1.15.12-gke.6"
-network         = "gke-vpc"
-subnetworks     = ["gke-subnet", "gke-subnet-pod", "gke-subnet-svc"]
-ssh_public_key  = "ssh-rsa example"
-dmz_cidr_range  = "10.10.0.0/16"
+cluster_name    = "furyctl"
+cluster_version = "1.18.12-gke.1210"
+network         = "furyctl"
+subnetworks     = ["furyctl-cluster-subnet", "furyctl-cluster-pod-subnet", "furyctl-cluster-service-subnet"]
+ssh_public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCefFo9ASM8grncpLpJr+DAeGzTtoIaxnqSqrPeSWlCyManFz5M/DDkbnql8PdrENFU28blZyIxu93d5U0RhXZumXk1utpe0L/9UtImnOGG6/dKv9fV9vcJH45XdD3rCV21ZMG1nuhxlN0DftcuUubt/VcHXflBGaLrs18DrMuHVIbyb5WO4wQ9Od/SoJZyR6CZmIEqag6ADx4aFcdsUwK1Cpc51LhPbkdXGGjipiwP45q0I6/Brjxv/Kia1e+RmIRHiltsVBdKKTL9hqu9esbAod9I5BkBtbB5bmhQUVFZehi+d/opPvsIszE/coW5r/g/EVf9zZswebFPcsNr85+x"
+dmz_cidr_range  = "10.0.0.0/8"
 tags            = {}
 node_pools = [
   {
@@ -13,24 +13,41 @@ node_pools = [
     max_size : 1
     instance_type : "n1-standard-1"
     volume_size : 100
-    subnetworks : null
+    subnetworks : ["europe-west1-b"]
     labels : {
       "sighup.io/role" : "app"
       "sighup.io/fury-release" : "v1.3.0"
     }
+    additional_firewall_rules: [{
+        name : "debug-1"
+        direction : "ingress"
+        cidr_block : "10.0.0.0/8"
+        protocol : "TCP"
+        ports : "80-80"
+        tags : {}
+      }]
     taints : []
     tags : {}
     max_pods : null # Default
   },
   {
     name : "node-pool-2"
-    version : "1.15.12-gke.6"
+    version : "1.18.12-gke.1210"
     min_size : 1
     max_size : 1
     instance_type : "n1-standard-2"
     volume_size : 50
-    subnetworks : null
+    subnetworks : ["europe-west1-b"]
     labels : {}
+    additional_firewall_rules: [
+      {
+        name : "debug-2"
+        direction : "egress"
+        cidr_block : "0.0.0.0/0"
+        protocol : "UDP"
+        ports : "53-53"
+        tags : {"dns" : "true"}
+      }]
     taints : [
       "sighup.io/role=app:NoSchedule"
     ]
