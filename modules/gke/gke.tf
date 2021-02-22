@@ -116,6 +116,73 @@ resource "google_compute_firewall" "ssh_to_nodes" {
   target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
 }
 
+locals {
+  ingress_fw_rules = flatten([
+    [for nodePool in var.node_pools : [
+      [for rule in nodePool.additional_firewall_rules : {
+        name          = rule.name
+        description   = "Additional Firewall ${rule.direction} rule for the node pool ${nodePool.name} in the ${var.cluster_name} GKE cluster"
+        direction     = upper(rule.direction)
+        protocol      = rule.protocol
+        ports         = [rule.ports]
+        source_ranges = [rule.cidr_block]
+        target_tags   = ["gke-${var.cluster_name}-${nodePool.name}"]
+      } if upper(rule.direction) == "INGRESS"]
+      ]
+    ]
+  ])
+  egress_fw_rules = flatten([
+    [for nodePool in var.node_pools : [
+      [for rule in nodePool.additional_firewall_rules : {
+        name               = rule.name
+        description        = "Additional Firewall ${rule.direction} rule for the node pool ${nodePool.name} in the ${var.cluster_name} GKE cluster"
+        direction          = upper(rule.direction)
+        protocol           = rule.protocol
+        ports              = [rule.ports]
+        destination_ranges = [rule.cidr_block]
+        source_tags        = ["gke-${var.cluster_name}-${nodePool.name}"]
+      } if upper(rule.direction) == "EGRESS"]
+      ]
+    ]
+  ])
+}
+
+resource "google_compute_firewall" "node_pools_egress" {
+  count = length(local.egress_fw_rules)
+
+  name        = local.egress_fw_rules[count.index]["name"]
+  description = local.egress_fw_rules[count.index]["description"]
+  direction   = local.egress_fw_rules[count.index]["direction"]
+
+  network = var.network
+
+  allow {
+    protocol = local.egress_fw_rules[count.index]["protocol"]
+    ports    = local.egress_fw_rules[count.index]["ports"]
+  }
+
+  destination_ranges = local.egress_fw_rules[count.index]["destination_ranges"]
+  target_tags        = local.egress_fw_rules[count.index]["source_tags"]
+}
+
+resource "google_compute_firewall" "node_pools_ingress" {
+  count = length(local.ingress_fw_rules)
+
+  name        = local.ingress_fw_rules[count.index]["name"]
+  description = local.ingress_fw_rules[count.index]["description"]
+  direction   = local.ingress_fw_rules[count.index]["direction"]
+
+  network = var.network
+
+  allow {
+    protocol = local.ingress_fw_rules[count.index]["protocol"]
+    ports    = local.ingress_fw_rules[count.index]["ports"]
+  }
+
+  source_ranges = local.ingress_fw_rules[count.index]["source_ranges"]
+  target_tags   = local.ingress_fw_rules[count.index]["target_tags"]
+}
+
 resource "google_compute_firewall" "gke_webhook" {
   count         = var.gke_add_additional_firewall_rules ? 1 : 0
   name          = "control-plane-access-to-${var.cluster_name}-worker-nodes"
