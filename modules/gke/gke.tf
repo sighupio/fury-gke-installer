@@ -140,7 +140,7 @@ locals {
         protocol           = rule.protocol
         ports              = [rule.ports]
         destination_ranges = [rule.cidr_block]
-        source_tags        = ["gke-${var.cluster_name}-${nodePool.name}"]
+        target_tags        = ["gke-${var.cluster_name}-${nodePool.name}"]
       } if upper(rule.direction) == "EGRESS"]
       ]
     ]
@@ -162,7 +162,7 @@ resource "google_compute_firewall" "node_pools_egress" {
   }
 
   destination_ranges = local.egress_fw_rules[count.index]["destination_ranges"]
-  target_tags        = local.egress_fw_rules[count.index]["source_tags"]
+  target_tags        = local.egress_fw_rules[count.index]["target_tags"]
 }
 
 resource "google_compute_firewall" "node_pools_ingress" {
