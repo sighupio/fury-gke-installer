@@ -31,6 +31,8 @@ locals {
     ]
   ]
   node_pools_taints = zipmap(local.node_names, local.temp_node_pools_taints)
+
+  parsed_master_authorized_networks = [for cidr in local.parsed_dmz_cidr_range : { cidr_block = cidr, display_name = "DMZ CIDR Range" }]
 }
 
 module "gke" {
@@ -59,12 +61,7 @@ module "gke" {
   logging_service               = "none"
   http_load_balancing           = false
 
-  master_authorized_networks = [
-    {
-      cidr_block   = var.dmz_cidr_range
-      display_name = "DMZ CIDR Range"
-    },
-  ]
+  master_authorized_networks = local.parsed_master_authorized_networks
 
   master_global_access_enabled = false
 
@@ -106,7 +103,7 @@ resource "google_compute_firewall" "ssh_to_nodes" {
   count         = var.gke_add_additional_firewall_rules ? 1 : 0
   name          = "ssh-access-to-${var.cluster_name}-gke-cluster-nodes"
   network       = var.network
-  source_ranges = [var.dmz_cidr_range]
+  source_ranges = local.parsed_dmz_cidr_range
 
   allow {
     protocol = "tcp"
