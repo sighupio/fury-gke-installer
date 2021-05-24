@@ -1,21 +1,12 @@
 data "google_client_config" "this" {}
 
-provider "local" {
-  version = "2.0.0"
-}
-
-provider "null" {
-  version = "3.0.0"
-}
-
-provider "external" {
-  version = "2.0.0"
-}
-
-provider "random" {
-  version = "3.0.1"
-}
-
-provider "google" {
-  version = "3.55.0"
+terraform {
+  required_version = "0.15.4"
+  required_providers {
+    local    = "2.0.0"
+    null     = "3.0.0"
+    external = "2.0.0"
+    random   = "3.0.1"
+    google   = "3.55.0"
+  }
 }

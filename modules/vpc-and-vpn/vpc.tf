@@ -94,7 +94,7 @@ module "vpc" {
 }
 
 resource "google_compute_address" "this_nat" {
-  name   = "${var.name}-nat"
+  name = "${var.name}-nat"
 }
 
 module "nat" {

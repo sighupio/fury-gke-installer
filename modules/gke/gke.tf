@@ -37,7 +37,7 @@ locals {
 
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
-  version = "12.0.0"
+  version = "14.3.0"
 
   project_id                    = data.google_client_config.current.project
   name                          = var.cluster_name
@@ -60,6 +60,7 @@ module "gke" {
   monitoring_service            = "none"
   logging_service               = "none"
   http_load_balancing           = false
+  network_policy                = true
 
   master_authorized_networks = local.parsed_master_authorized_networks
 
