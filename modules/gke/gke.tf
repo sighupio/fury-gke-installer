@@ -30,6 +30,7 @@ locals {
       }
     ]
   ]
+  preemptible = node_pool.preemptible
   node_pools_taints = zipmap(local.node_names, local.temp_node_pools_taints)
 
   parsed_master_authorized_networks = [for cidr in local.parsed_dmz_cidr_range : { cidr_block = cidr, display_name = "DMZ CIDR Range" }]
@@ -56,6 +57,7 @@ module "gke" {
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
   enable_private_nodes          = true
+  preemptible                   = local.preemptible
   remove_default_node_pool      = true
   monitoring_service            = "none"
   logging_service               = "none"
