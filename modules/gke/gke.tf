@@ -210,3 +210,18 @@ resource "google_compute_firewall" "gatekeeper_webhook" {
 
   target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
 }
+
+resource "google_compute_firewall" "certmanager_webhook" {
+  count         = var.gke_add_additional_firewall_rules ? 1 : 0
+  name          = "certmanager-webhook-access-to-${var.cluster_name}-worker-nodes"
+  description   = "Allow access from GKE masters to worker nodes to allow Certmanager WebHook"
+  network       = var.network
+  source_ranges = [module.gke.master_ipv4_cidr_block]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["6443"]
+  }
+
+  target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
+}
