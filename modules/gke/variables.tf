@@ -14,7 +14,7 @@ variable "network" {
 }
 
 variable "subnetworks" {
-  type        = list
+  type        = list(any)
   description = "List of subnets where the cluster will be hosted"
 }
 
@@ -39,6 +39,7 @@ variable "node_pools" {
     min_size      = number
     max_size      = number
     instance_type = string
+    os            = optional(string)
     max_pods      = number # null to use default upstream configuration
     volume_size   = number
     subnetworks   = list(string) # "" to use default upstream configuration
@@ -58,7 +59,7 @@ variable "node_pools" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   description = "The tags to apply to all resources"
   default     = {}
 }
