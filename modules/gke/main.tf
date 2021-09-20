@@ -1,5 +1,6 @@
 terraform {
   required_version = "0.15.4"
+  experiments      = [module_variable_optional_attrs]
   required_providers {
     google      = "3.55.0"
     google-beta = "3.55.0"
