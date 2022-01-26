@@ -28,7 +28,7 @@ Click on each module to see its full documentation.
 
 The GKE installers deploys and configures a production-ready GKE cluster without having to learn all internals of the service.
 
-<img src="./docs/assets/fury_installer_architecture.jpg?raw=true" width="600" style="margin: 0 auto"/>
+<img src="./docs/assets/fury_installer_architecture.jpg?raw=true" width="800" style="margin: 0 auto"/>
 
 The [GKE module][gke-module] deploys a **private control plane** cluster, where the control plane endpoint is not publicly accessible.
 
@@ -64,12 +64,12 @@ To create the cluster via the installers:
 
 Please refer to each module documentation and the [example](example/) folder for more details.
 
-You can follow the [Fury on GKE quick start guide][fury-gke-quickstart] for a more detailed walkthrough
+> You can follow the [Fury on GKE quick start guide][fury-gke-quickstart] for a more detailed walkthrough
 
 <!-- Links -->
 
-[vpc-vpn-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/vpc-and-vpn
-[gke-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/eks
+[vpc-vpn-module]: ./modules/vpc-and-vpn
+[gke-module]: ./modules/eks
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 
 [furyagent]: https://github.com/sighupio/furyagent
