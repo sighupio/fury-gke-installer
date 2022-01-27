@@ -5,12 +5,12 @@ variable "cluster_name" {
 
 variable "cluster_version" {
   type        = string
-  description = "Kubernetes Cluster Version. Look at the cloud providers documentation to discover available versions. EKS example -> 1.16, GKE example -> 1.16.8-gke.9"
+  description = "Kubernetes Cluster Version. Look at the cloud provider documentation to discover available versions. Example 1.16.8-gke.9"
 }
 
 variable "network" {
   type        = string
-  description = "Network where the Kubernetes cluster will be hosted"
+  description = "Network name where the Kubernetes cluster will be hosted"
 }
 
 variable "subnetworks" {
@@ -28,7 +28,7 @@ locals {
 
 variable "ssh_public_key" {
   type        = string
-  description = "Cluster administrator public ssh key. Used to access cluster nodes with the operator_ssh_user"
+  description = "Cluster administrator public SSH key. Used to access cluster nodes with the operator_ssh_user"
 }
 
 variable "node_pools" {
@@ -60,13 +60,13 @@ variable "node_pools" {
 
 variable "tags" {
   type        = map(any)
-  description = "The tags to apply to all resources"
+  description = "Tags to apply to all resources"
   default     = {}
 }
 
 variable "resource_group_name" {
   type        = string
-  description = "Resource group name where every resource will be placed. Required only in AKS installer (*)"
+  description = "[Azure] Resource group name where every resource will be placed"
   default     = ""
 }
 
