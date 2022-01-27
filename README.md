@@ -28,7 +28,7 @@ Click on each module to see its full documentation.
 
 The GKE installers deploys and configures a production-ready GKE cluster without having to learn all internals of the service.
 
-<img src="./docs/assets/fury_installer_architecture.jpg?raw=true" width="800"/>
+![Architecture](./docs/assets/fury_installer_architecture.jpg)
 
 The [GKE module][gke-module] deploys a **private control plane** cluster, where the control plane endpoint is not publicly accessible.
 
