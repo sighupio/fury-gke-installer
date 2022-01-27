@@ -15,7 +15,7 @@ If you are new to Kubernetes Fury please refer to the [official documentation][k
 
 ## Modules
 
-The installer is composed of two different terraform modules:
+The installer is composed of the following terraform modules:
 
 |            Module             |                  Description                   |
 | ----------------------------- | ---------------------------------------------- |
