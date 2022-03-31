@@ -60,7 +60,7 @@ module "my-cluster" {
     ]
     tags : {}
     max_pods : 50 # Specific
-    spot_instance : true # to enable preemptible instances, optional
+    spot_instance : true # create preemptible instances instead of the standard ones, optional
   }
   ]
 
