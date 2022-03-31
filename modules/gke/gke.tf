@@ -30,7 +30,6 @@ locals {
       }
     ]
   ]
-  preemptible       = coalesce(node_pool.spot_instance, "false")
   node_pools_taints = zipmap(local.node_names, local.temp_node_pools_taints)
 
   parsed_master_authorized_networks = [for cidr in local.parsed_dmz_cidr_range : { cidr_block = cidr, display_name = "DMZ CIDR Range" }]
@@ -57,7 +56,6 @@ module "gke" {
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
   enable_private_nodes          = true
-  preemptible                   = local.preemptible
   remove_default_node_pool      = true
   monitoring_service            = "none"
   logging_service               = "none"
@@ -94,6 +92,8 @@ module "gke" {
       min_count            = worker.min_size
       max_count            = worker.max_size
       disk_size_gb         = worker.volume_size
+      image_type           = worker.os != null ? worker.os : "COS"
+      preemptible          = coalesce(worker.spot_instance, "false")
       node_locations       = worker.subnetworks != null && length(worker.subnetworks) > 0 ? worker.subnetworks[0] : ""
       auto_upgrade         = false
       version              = worker.version != null ? worker.version : var.cluster_version
