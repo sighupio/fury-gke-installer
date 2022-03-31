@@ -89,6 +89,7 @@ module "my-cluster" {
     taints : []
     tags : {}
     # max_pods : null # Default
+    # spot_instance: false # Default
   },
   {
     name : "node-pool-2"
@@ -113,6 +114,7 @@ module "my-cluster" {
     ]
     tags : {}
     max_pods : 50 # Specific
+    spot_instance: true # Create preemptable spot instances for the node pool
   }
   ]
 
