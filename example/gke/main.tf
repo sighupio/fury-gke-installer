@@ -42,6 +42,8 @@ module "my-cluster" {
     min_size : 1
     max_size : 1
     instance_type : "n1-standard-2"
+
+    os : "COS" # to select a defined OS image, optional
     volume_size : 50
     subnetworks : ["europe-west1-b"]
     labels : {}
@@ -59,6 +61,7 @@ module "my-cluster" {
     ]
     tags : {}
     max_pods : 50 # Specific
+    spot_instance : true # to enable preemptible instances, optional
   }
   ]
 
