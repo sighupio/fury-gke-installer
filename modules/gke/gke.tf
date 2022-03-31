@@ -56,7 +56,6 @@ module "gke" {
   deploy_using_private_endpoint = true
   enable_private_endpoint       = true
   enable_private_nodes          = true
-  preemptible                   = local.preemptible
   remove_default_node_pool      = true
   monitoring_service            = "none"
   logging_service               = "none"
