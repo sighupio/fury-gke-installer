@@ -68,8 +68,8 @@ Please refer to each module documentation and the [example](example/) folder for
 
 <!-- Links -->
 
-[vpc-vpn-module]: ./modules/vpc-and-vpn
-[gke-module]: ./modules/gke
+[vpc-vpn-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/vpc-and-vpn
+[gke-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/gke
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 
 [furyagent]: https://github.com/sighupio/furyagent
