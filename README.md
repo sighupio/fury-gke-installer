@@ -69,7 +69,7 @@ Please refer to each module documentation and the [example](example/) folder for
 <!-- Links -->
 
 [vpc-vpn-module]: ./modules/vpc-and-vpn
-[gke-module]: ./modules/eks
+[gke-module]: ./modules/gke
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 
 [furyagent]: https://github.com/sighupio/furyagent
