@@ -184,6 +184,8 @@ resource "google_service_account_key" "furyagent_client" {
 resource "local_file" "furyagent_client" {
   content  = local.furyagent_client
   filename = "${path.root}/secrets/furyagent.yml"
+
+  depends_on = [ "local_file.google_service_account_key" ]
 }
 
 resource "local_file" "google_service_account_key" {
@@ -203,6 +205,8 @@ resource "null_resource" "init" {
   provisioner "local-exec" {
     command = "until `${local.local_furyagent} init openvpn --config ${local_file.furyagent_client.filename}`; do echo \"Retrying\"; sleep 30; done" # Required because of gcp iam lag
   }
+
+  depends_on = ["local_file.furyagent_client"]
 }
 
 resource "null_resource" "ssh_users" {
@@ -213,4 +217,5 @@ resource "null_resource" "ssh_users" {
   provisioner "local-exec" {
     command = "until `${local.local_furyagent} init ssh-keys --config ${local_file.furyagent_client.filename}`; do echo \"Retrying\"; sleep 30; done" # Required because of aws iam lag
   }
+  depends_on = ["local_file.sshkeys", "local_file.furyagent_client"]
 }
