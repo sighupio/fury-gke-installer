@@ -227,3 +227,19 @@ resource "google_compute_firewall" "certmanager_webhook" {
 
   target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
 }
+
+resource "google_compute_firewall" "nginx_ingress_admission_webhook" {
+  name          = "allow-nginx-ingress-admission-webhook"
+  description   = "Allow request from API server to worker nodes for NGINX Ingress Validating Admission Webhook"
+  network       = var.network
+  source_ranges = [module.gke.master_ipv4_cidr_block]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9443"]
+  }
+
+  direction = "INGRESS"
+
+  target_tags = ["sighup-io-gke-cluster-${var.cluster_name}"]
+}
