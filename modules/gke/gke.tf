@@ -92,7 +92,7 @@ module "gke" {
       min_count            = worker.min_size
       max_count            = worker.max_size
       disk_size_gb         = worker.volume_size
-      image_type           = worker.os != null ? worker.os : "COS"
+      image_type           = worker.os != null ? worker.os : "COS_CONTAINERD"
       preemptible          = coalesce(worker.spot_instance, "false")
       node_locations       = worker.subnetworks != null && length(worker.subnetworks) > 0 ? worker.subnetworks[0] : ""
       auto_upgrade         = false
