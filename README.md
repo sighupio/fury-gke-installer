@@ -47,7 +47,7 @@ The bastion host includes a OpenVPN instance easily manageable by using [furyage
   - *Compute Engine API*
   - *Cloud Resource Manager API*
   - *Kubernetes Engine API*
-- **terraform** `0.15.4`
+- **terraform** `>=1.3.0`
 - `ssh` or **OpenVPN Client** - [Tunnelblick][tunnelblick] (on macOS) or [OpenVPN Connect][openvpn-connect] (for other OS) are recommended.
 
 ### Create GKE Cluster
