@@ -1,5 +1,5 @@
 module "my-cluster" {
-  source = "../modules/gke"
+  source = "../../modules/gke"
 
   cluster_name    = "furyctl"
   cluster_version = "1.20.9-gke.700"
