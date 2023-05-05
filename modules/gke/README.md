@@ -8,19 +8,18 @@
 
 | Name | Version |
 |------|---------|
-| terraform | 0.15.4 |
-| external | 2.0.0 |
-| google | 3.55.0 |
-| google-beta | 3.55.0 |
-| kubernetes | 1.13.3 |
-| null | 3.0.0 |
-| random | 3.0.1 |
+| terraform | `>=1.3.0` |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| google | 3.55.0 |
+| external | `~>2.1.0` |
+| google | `~>3.63.0` |
+| google-beta | `~>3.63.0` |
+| kubernetes | `~>1.13.4` |
+| null | `~>3.1.1` |
+| random | `~>3.1.0` |
 
 ## Inputs
 
@@ -53,7 +52,7 @@
 
 ```hcl
 module "my-cluster" {
-  source = "../modules/gke"
+  source = "../../modules/gke"
 
   cluster_name    = "furyctl"
   cluster_version = "1.20.9-gke.700"
@@ -89,7 +88,6 @@ module "my-cluster" {
     taints : []
     tags : {}
     # max_pods : null # Default
-    # spot_instance: false # Default
   },
   {
     name : "node-pool-2"
