@@ -5,7 +5,7 @@ variable "cluster_name" {
 
 variable "cluster_version" {
   type        = string
-  description = "Kubernetes Cluster Version. Look at the cloud provider documentation to discover available versions. Example 1.16.8-gke.9"
+  description = "Kubernetes Cluster Version. Look at the cloud provider documentation to discover available versions. eg: 1.26.2-gke.1000"
 }
 
 variable "network" {

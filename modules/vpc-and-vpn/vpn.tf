@@ -215,7 +215,7 @@ resource "null_resource" "ssh_users" {
     "sync-operator" : var.vpn_operator_name
   }
   provisioner "local-exec" {
-    command = "until `${local.local_furyagent} init ssh-keys --config ${local_file.furyagent_client.filename}`; do echo \"Retrying\"; sleep 30; done" # Required because of aws iam lag
+    command = "until `${local.local_furyagent} init ssh-keys --config ${local_file.furyagent_client.filename}`; do echo \"Retrying\"; sleep 30; done" # Required because of gcp iam lag
   }
   depends_on = [local_file.sshkeys,
     local_file.furyagent_client

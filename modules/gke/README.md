@@ -26,7 +26,7 @@
 | Name | Description | Default | Required |
 |------|-------------|---------|:--------:|
 | cluster\_name | Unique cluster name. Used in multiple resources to identify your cluster resources | n/a | yes |
-| cluster\_version | Kubernetes Cluster Version. Look at the cloud provider documentation to discover available versions. Example 1.16.8-gke.9 | n/a | yes |
+| cluster\_version | Kubernetes Cluster Version. Look at the cloud provider documentation to discover available versions. eg: 1.26.2-gke.1000 | n/a | yes |
 | dmz\_cidr\_range | Network CIDR range from where cluster control plane will be accessible | n/a | yes |
 | gke\_add\_additional\_firewall\_rules | [GKE] Create additional firewall rules | `true` | no |
 | gke\_add\_cluster\_firewall\_rules | [GKE] Create additional firewall rules (Upstream GKE module) | `false` | no |
@@ -56,11 +56,11 @@ module "my-cluster" {
 
   cluster_name    = "furyctl"
   cluster_version = "1.20.9-gke.700"
-  
+
   network         = "furyctl"
   subnetworks     = ["furyctl-cluster-subnet", "furyctl-cluster-pod-subnet", "furyctl-cluster-service-subnet"]
   dmz_cidr_range  = "10.0.0.0/8"
-  
+
   ssh_public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCefFo9ASM8grncpLpJr+DAeGzTtoIaxnqSqrPeSWlCyManFz5M/DDkbnql8PdrENFU28blZyIxu93d5U0RhXZumXk1utpe0L/9UtImnOGG6/dKv9fV9vcJH45XdD3rCV21ZMG1nuhxlN0DftcuUubt/VcHXflBGaLrs18DrMuHVIbyb5WO4wQ9Od/SoJZyR6CZmIEqag6ADx4aFcdsUwK1Cpc51LhPbkdXGGjipiwP45q0I6/Brjxv/Kia1e+RmIRHiltsVBdKKTL9hqu9esbAod9I5BkBtbB5bmhQUVFZehi+d/opPvsIszE/coW5r/g/EVf9zZswebFPcsNr85+x"
   tags            = {}
 

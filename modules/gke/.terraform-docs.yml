@@ -23,14 +23,14 @@ content: |-
 
   {{ .Providers }}
 
-  {{ .Inputs }}  
+  {{ .Inputs }}
 
   {{ .Outputs }}
 
   ## Usage
 
   ```hcl
-  {{ include "../../example/gke/main.tf" }}
+  {{ include "../../examples/gke/main.tf" }}
   ```
 
   <!-- </KFD-DOCS> -->

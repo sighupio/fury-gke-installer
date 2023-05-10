@@ -62,7 +62,7 @@ To create the cluster via the installers:
 
 4. Use the [GKE module][gke-module] to deploy the GKE cluster
 
-Please refer to each module documentation and the [example](example/) folder for more details.
+Please refer to each module documentation and the [examples](examples/) folder for more details.
 
 > You can follow the [Fury on GKE quick start guide][fury-gke-quickstart] for a more detailed walkthrough
 
