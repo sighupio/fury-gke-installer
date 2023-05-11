@@ -47,7 +47,7 @@ The bastion host includes a OpenVPN instance easily manageable by using [furyage
   - *Compute Engine API*
   - *Cloud Resource Manager API*
   - *Kubernetes Engine API*
-- **terraform** `0.15.4`
+- **terraform** `>=1.3.0`
 - `ssh` or **OpenVPN Client** - [Tunnelblick][tunnelblick] (on macOS) or [OpenVPN Connect][openvpn-connect] (for other OS) are recommended.
 
 ### Create GKE Cluster
@@ -62,7 +62,7 @@ To create the cluster via the installers:
 
 4. Use the [GKE module][gke-module] to deploy the GKE cluster
 
-Please refer to each module documentation and the [example](example/) folder for more details.
+Please refer to each module documentation and the [examples](examples/) folder for more details.
 
 > You can follow the [Fury on GKE quick start guide][fury-gke-quickstart] for a more detailed walkthrough
 

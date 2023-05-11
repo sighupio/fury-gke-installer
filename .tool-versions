@@ -1,1 +1,3 @@
-terraform 0.15.4
+terraform 1.4.6
+terraform-docs 0.16.0
+gcloud 430.0.0
