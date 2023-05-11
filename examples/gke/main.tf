@@ -12,7 +12,7 @@ terraform {
 provider "google" {
   project     = var.gcp_project_id
   region      = "europe-west1"
-  zone        = "europe-west1-a"
+  zone        = "europe-west1-b"
 }
 
 module "my-cluster" {
@@ -36,7 +36,7 @@ module "my-cluster" {
       max_size: 1
       instance_type: "n1-standard-1"
       volume_size: 100
-      subnetworks: ["europe-west1-a"]
+      subnetworks: ["europe-west1-b"]
       labels: {
         "sighup.io/role": "app"
         "sighup.io/fury-release": "v1.25.0"
@@ -60,9 +60,9 @@ module "my-cluster" {
       min_size: 1
       max_size: 1
       instance_type: "n1-standard-2"
-      os: "COS" # to select a particular OS image, optional. Default: COS: Container-Optimized OS
+      os: "COS_CONTAINERD" # to select a particular OS image, optional. Default: COS: Container-Optimized OS, using containerd
       volume_size: 50
-      subnetworks: ["europe-west1-a"]
+      subnetworks: ["europe-west1-b"]
       labels: {}
       additional_firewall_rules: [
         {
