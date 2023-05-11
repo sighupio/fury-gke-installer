@@ -68,7 +68,16 @@ provider "google" {
   zone        = "europe-west1-b"
 }
 
-module "my-cluster" {
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = module.my_cluster.cluster_endpoint
+  token                  = data.google_client_config.current.access_token
+  cluster_ca_certificate = base64decode(module.my_cluster.cluster_certificate_authority)
+}
+
+data "google_client_config" "current" {}
+
+module "my_cluster" {
   source = "../../modules/gke"
 
   cluster_name    = "fury"
@@ -136,8 +145,6 @@ module "my-cluster" {
     }
   ]
 }
-
-data "google_client_config" "current" {}
 ```
 
 <!-- </KFD-DOCS> -->

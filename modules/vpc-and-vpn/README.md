@@ -82,7 +82,7 @@ provider "google" {
   zone        = "europe-west1-b"
 }
 
-module "vpc-and-vpn" {
+module "vpc_and_vpn" {
   source = "../../modules/vpc-and-vpn"
 
   name = "fury"
