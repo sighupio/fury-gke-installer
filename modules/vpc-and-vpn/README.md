@@ -9,21 +9,21 @@
 | Name | Version |
 |------|---------|
 | terraform | >= 1.3 |
-| external | ~>2.3 |
-| google | ~>3.90 |
-| local | ~>2.4 |
-| null | ~>3.2 |
-| random | ~>3.5 |
+| external | ~> 2.3 |
+| google | ~> 3.90 |
+| local | ~> 2.4 |
+| null | ~> 3.2 |
+| random | ~> 3.5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| external | ~>2.3 |
-| google | ~>3.90 |
-| local | ~>2.4 |
-| null | ~>3.2 |
-| random | ~>3.5 |
+| external | ~> 2.3 |
+| google | ~> 3.90 |
+| local | ~> 2.4 |
+| null | ~> 3.2 |
+| random | ~> 3.5 |
 
 ## Inputs
 
