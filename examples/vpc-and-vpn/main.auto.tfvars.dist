@@ -1,1 +1,2 @@
-gcp_project_id = []
+vpn_ssh_users = []
+gcp_project_id = ""

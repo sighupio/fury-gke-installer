@@ -1,2 +1,2 @@
-gcp_project_id = []
+gcp_project_id = ""
 ssh_public_key = ""
