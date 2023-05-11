@@ -8,18 +8,18 @@
 
 | Name | Version |
 |------|---------|
-| terraform | `>=1.3.0` |
+| terraform | >= 1.3 |
+| external | ~> 2.3 |
+| google | ~> 3.90 |
+| kubernetes | ~> 1.13 |
+| null | ~> 3.2 |
+| random | ~> 3.5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| external | `~>2.1.0` |
-| google | `~>3.63.0` |
-| google-beta | `~>3.63.0` |
-| kubernetes | `~>1.13.4` |
-| null | `~>3.1.1` |
-| random | `~>3.1.0` |
+| google | ~> 3.90 |
 
 ## Inputs
 
@@ -51,72 +51,90 @@
 ## Usage
 
 ```hcl
+terraform {
+  required_version = "~> 1.4"
+  required_providers {
+    external   = "~> 2.3.1"
+    google     = "~> 3.90.1"
+    kubernetes = "~> 1.13.4"
+    local      = "~> 2.4.0"
+    null       = "~> 3.2.1"
+  }
+}
+
+provider "google" {
+  project     = var.gcp_project_id
+  region      = "europe-west1"
+  zone        = "europe-west1-b"
+}
+
 module "my-cluster" {
   source = "../../modules/gke"
 
-  cluster_name    = "furyctl"
-  cluster_version = "1.20.9-gke.700"
+  cluster_name    = "fury"
+  cluster_version = "1.25.7-gke.1000"
 
-  network         = "furyctl"
-  subnetworks     = ["furyctl-cluster-subnet", "furyctl-cluster-pod-subnet", "furyctl-cluster-service-subnet"]
+  network         = "fury"
+  subnetworks     = ["fury-cluster-subnet", "fury-cluster-pod-subnet", "fury-cluster-service-subnet"]
   dmz_cidr_range  = "10.0.0.0/8"
 
-  ssh_public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCefFo9ASM8grncpLpJr+DAeGzTtoIaxnqSqrPeSWlCyManFz5M/DDkbnql8PdrENFU28blZyIxu93d5U0RhXZumXk1utpe0L/9UtImnOGG6/dKv9fV9vcJH45XdD3rCV21ZMG1nuhxlN0DftcuUubt/VcHXflBGaLrs18DrMuHVIbyb5WO4wQ9Od/SoJZyR6CZmIEqag6ADx4aFcdsUwK1Cpc51LhPbkdXGGjipiwP45q0I6/Brjxv/Kia1e+RmIRHiltsVBdKKTL9hqu9esbAod9I5BkBtbB5bmhQUVFZehi+d/opPvsIszE/coW5r/g/EVf9zZswebFPcsNr85+x"
+  ssh_public_key  = var.ssh_public_key
   tags            = {}
 
   node_pools = [
-  {
-    name : "node-pool-1"
-    version : null # To use the cluster_version
-    min_size : 1
-    max_size : 1
-    instance_type : "n1-standard-1"
-    volume_size : 100
-    subnetworks : ["europe-west1-b"]
-    labels : {
-      "sighup.io/role" : "app"
-      "sighup.io/fury-release" : "v1.3.0"
+    {
+      name: "node-pool-1"
+      version: null # To use the cluster_version
+      min_size: 1
+      max_size: 1
+      instance_type: "n1-standard-1"
+      volume_size: 100
+      subnetworks: ["europe-west1-b"]
+      labels: {
+        "sighup.io/role": "app"
+        "sighup.io/fury-release": "v1.25.0"
+      }
+      additional_firewall_rules: [{
+          name: "debug-1"
+          direction: "ingress"
+          cidr_block: "10.0.0.0/8"
+          protocol: "TCP"
+          ports: "80-80"
+          tags: {}
+        }
+      ]
+      taints: []
+      tags: {}
+      # max_pods: null # Default
+    },
+    {
+      name: "node-pool-2"
+      version: "1.25.7-gke.1000"
+      min_size: 1
+      max_size: 1
+      instance_type: "n1-standard-2"
+      os: "COS_CONTAINERD" # to select a particular OS image, optional. Default: COS: Container-Optimized OS, using containerd
+      volume_size: 50
+      subnetworks: ["europe-west1-b"]
+      labels: {}
+      additional_firewall_rules: [
+        {
+          name: "debug-2"
+          direction: "egress"
+          cidr_block: "0.0.0.0/0"
+          protocol: "UDP"
+          ports: "53-53"
+          tags: {"dns": "true"}
+        }
+      ]
+      taints: [
+        "sighup.io/role=app:NoSchedule"
+      ]
+      tags: {}
+      max_pods: 50 # Specific
+      spot_instance: true # create preemptible instances instead of the standard ones, optional
     }
-    additional_firewall_rules: [{
-        name : "debug-1"
-        direction : "ingress"
-        cidr_block : "10.0.0.0/8"
-        protocol : "TCP"
-        ports : "80-80"
-        tags : {}
-      }]
-    taints : []
-    tags : {}
-    # max_pods : null # Default
-  },
-  {
-    name : "node-pool-2"
-    version : "1.20.9-gke.700"
-    min_size : 1
-    max_size : 1
-    instance_type : "n1-standard-2"
-    os : "COS" # to select a particular OS image, optional. Default: COS: Container-Optimized OS
-    volume_size : 50
-    subnetworks : ["europe-west1-b"]
-    labels : {}
-    additional_firewall_rules: [
-      {
-        name : "debug-2"
-        direction : "egress"
-        cidr_block : "0.0.0.0/0"
-        protocol : "UDP"
-        ports : "53-53"
-        tags : {"dns" : "true"}
-      }]
-    taints : [
-      "sighup.io/role=app:NoSchedule"
-    ]
-    tags : {}
-    max_pods : 50 # Specific
-    spot_instance : true # create preemptible instances instead of the standard ones, optional
-  }
   ]
-
 }
 
 data "google_client_config" "current" {}
