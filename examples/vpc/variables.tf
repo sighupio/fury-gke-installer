@@ -10,7 +10,6 @@ variable "name" {
 
 variable "public_subnetwork_cidrs" {
   type = list(string)
-  
 }
 
 variable "private_subnetwork_cidrs" {

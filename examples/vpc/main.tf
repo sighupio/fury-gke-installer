@@ -26,5 +26,4 @@ module "vpc" {
   cluster_pod_subnetwork_cidr     = var.cluster_pod_subnetwork_cidr
   cluster_service_subnetwork_cidr = var.cluster_service_subnetwork_cidr
   cluster_subnetwork_cidr         = var.cluster_subnetwork_cidr
-
 }
