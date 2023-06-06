@@ -1,0 +1,6 @@
+vpn_ssh_users = []
+gcp_project_id = ""
+name = ""
+network = ""
+public_subnetwork_cidrs = []
+public_subnetworks = []

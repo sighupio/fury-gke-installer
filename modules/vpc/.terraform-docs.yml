@@ -15,7 +15,7 @@ sections:
 
 content: |-
 
-  # Fury GKE Installer - vpc-and-vpn module
+  # Fury GKE Installer - vpc
 
   <!-- <KFD-DOCS> -->
 
@@ -30,7 +30,7 @@ content: |-
   ## Usage
 
   ```hcl
-  {{ include "../../examples/vpc-and-vpn/main.tf" }}
+  {{ include "../../examples/vpc/main.tf" }}
   ```
 
   <!-- </KFD-DOCS> -->

@@ -11,8 +11,15 @@ that cannot be automated with the following script.
 gcloud auth application-default login
 export GOOGLE_APPLICATION_CREDENTIALS=~/.config/gcloud/application_default_credentials.json
 
-# Bring up the vpc and vpn
-cd examples/vpc-and-vpn
+# Bring up the vpc
+cd examples/vpc
+cp main.auto.tfvars.dist main.auto.tfvars
+# TASK: fill in main.auto.tfvars with your data
+terraform init
+terraform apply
+
+# Bring up the vpn
+cd examples/vpn
 cp main.auto.tfvars.dist main.auto.tfvars
 # TASK: fill in main.auto.tfvars with your data
 terraform init
