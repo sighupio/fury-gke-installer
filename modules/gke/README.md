@@ -35,7 +35,7 @@
 | gke\_network\_project\_id | [GKE] The project ID of the shared VPC's host (for shared vpc support) | `""` | no |
 | network | Network name where the Kubernetes cluster will be hosted | n/a | yes |
 | node\_pools | An object list defining node pools configurations | `[]` | no |
-| resource\_group\_name | [Azure] Resource group name where every resource will be placed | `""` | no |
+| resource\_group\_name | [GKE] Resource group name where every resource will be pla\ced | `""` | no |
 | ssh\_public\_key | Cluster administrator public SSH key. Used to access cluster nodes with the operator\_ssh\_user | n/a | yes |
 | subnetworks | List of subnets where the cluster will be hosted | n/a | yes |
 | tags | Tags to apply to all resources | `{}` | no |
@@ -81,7 +81,7 @@ module "my_cluster" {
   source = "../../modules/gke"
 
   cluster_name    = "fury"
-  cluster_version = "1.25.7-gke.1000"
+  cluster_version = "1.25.8-gke.500"
 
   network         = "fury"
   subnetworks     = ["fury-cluster-subnet", "fury-cluster-pod-subnet", "fury-cluster-service-subnet"]
@@ -118,7 +118,7 @@ module "my_cluster" {
     },
     {
       name: "node-pool-2"
-      version: "1.25.7-gke.1000"
+      version: "1.25.8-gke.500"
       min_size: 1
       max_size: 1
       instance_type: "n1-standard-2"

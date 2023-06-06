@@ -27,11 +27,11 @@ data "google_client_config" "current" {}
 module "my_cluster" {
   source = "../../modules/gke"
 
-  cluster_name    = "fury"
-  cluster_version = "1.25.7-gke.1000"
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
 
-  network         = "fury"
-  subnetworks     = ["fury-cluster-subnet", "fury-cluster-pod-subnet", "fury-cluster-service-subnet"]
+  network         = var.network_name
+  subnetworks     = var.subnetworks_names
   dmz_cidr_range  = "10.0.0.0/8"
 
   ssh_public_key  = var.ssh_public_key
@@ -65,7 +65,7 @@ module "my_cluster" {
     },
     {
       name: "node-pool-2"
-      version: "1.25.7-gke.1000"
+      version: var.cluster_version
       min_size: 1
       max_size: 1
       instance_type: "n1-standard-2"

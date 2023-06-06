@@ -1,2 +1,6 @@
-gcp_project_id = ""
-ssh_public_key = ""
+gcp_project_id    = ""
+ssh_public_key    = ""
+cluster_name      = ""
+cluster_version   = "1.25.8-gke.500"
+network_name      = ""
+subnetworks_names = []
