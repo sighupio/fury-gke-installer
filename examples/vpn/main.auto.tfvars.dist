@@ -1,0 +1,6 @@
+vpn_ssh_users = []
+gcp_project_id = ""
+name = "fury"
+network = "fury"
+public_subnetwork_cidrs  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+public_subnetworks = ["fury-public-subnet-1", "fury-public-subnet-2", "fury-public-subnet-3"]

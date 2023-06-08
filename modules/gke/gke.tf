@@ -61,6 +61,7 @@ module "gke" {
   logging_service               = "none"
   http_load_balancing           = false
   network_policy                = true
+  release_channel               = "UNSPECIFIED"
 
   master_authorized_networks = local.parsed_master_authorized_networks
 

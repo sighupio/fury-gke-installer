@@ -1,12 +1,31 @@
-output "furyagent" {
-  description = "furyagent.yml used by the vpn instance and ready to use to create a vpn profile"
-  sensitive   = true
-  value       = local.furyagent_client
-}
+locals {
+  public_subnets = [for subnet in module.vpc.subnets :
+    {
+      subnet_name   = subnet.name
+      subnet_ip     = subnet.ip_cidr_range
+      subnet_region = subnet.region
+      secondary_ip_range_names = [for secondary_range in subnet.secondary_ip_range : secondary_range.range_name]
+    }
+    if contains(var.public_subnetwork_cidrs, subnet.ip_cidr_range)
+  ]
 
-output "vpn_ip" {
-  description = "VPN instance IP"
-  value       = google_compute_address.vpn.*.address
+  private_subnets = [for subnet in module.vpc.subnets :
+    {
+      subnet_name   = subnet.name
+      subnet_ip     = subnet.ip_cidr_range
+      subnet_region = subnet.region
+    }
+    if contains(var.private_subnetwork_cidrs, subnet.ip_cidr_range)
+  ]
+
+  cluster_private_subnet = [for subnet in module.vpc.subnets :
+    {
+      subnet_name   = subnet.name
+      subnet_ip     = subnet.ip_cidr_range
+      subnet_region = subnet.region
+    }
+    if contains([var.cluster_subnetwork_cidr], subnet.ip_cidr_range)
+  ]
 }
 
 output "network_name" {

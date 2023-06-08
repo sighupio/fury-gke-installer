@@ -6,14 +6,7 @@ locals {
       subnet_region = data.google_client_config.this.region
     }
   ]
-  public_subnets = [for subnet in module.vpc.subnets :
-    {
-      subnet_name   = subnet.name
-      subnet_ip     = subnet.ip_cidr_range
-      subnet_region = subnet.region
-    }
-    if contains(var.public_subnetwork_cidrs, subnet.ip_cidr_range)
-  ]
+
   vpc_private_subnets = [for private_subnetwork_cidr in var.private_subnetwork_cidrs :
     {
       subnet_name           = "${var.name}-private-subnet-${index(var.private_subnetwork_cidrs, private_subnetwork_cidr) + 1}"
@@ -22,14 +15,7 @@ locals {
       subnet_private_access = "true"
     }
   ]
-  private_subnets = [for subnet in module.vpc.subnets :
-    {
-      subnet_name   = subnet.name
-      subnet_ip     = subnet.ip_cidr_range
-      subnet_region = subnet.region
-    }
-    if contains(var.private_subnetwork_cidrs, subnet.ip_cidr_range)
-  ]
+
   vpc_cluster_private_subnet = [
     {
       subnet_name           = "${var.name}-cluster-subnet"
@@ -38,14 +24,7 @@ locals {
       subnet_private_access = "true"
     }
   ]
-  cluster_private_subnet = [for subnet in module.vpc.subnets :
-    {
-      subnet_name   = subnet.name
-      subnet_ip     = subnet.ip_cidr_range
-      subnet_region = subnet.region
-    }
-    if contains([var.cluster_subnetwork_cidr], subnet.ip_cidr_range)
-  ]
+
 
   private_nat_subnetworks = [for subnet in module.vpc.subnets :
     {
@@ -55,6 +34,7 @@ locals {
     }
     if contains(var.private_subnetwork_cidrs, subnet.ip_cidr_range)
   ]
+
   cluster_nat_subnetworks = [for subnet in module.vpc.subnets :
     {
       name                     = subnet.name
@@ -63,9 +43,9 @@ locals {
     }
     if contains([var.cluster_subnetwork_cidr], subnet.ip_cidr_range)
   ]
+
   nat_subnetworks = concat(local.private_nat_subnetworks, local.cluster_nat_subnetworks)
   vpc_subnets     = concat(local.vpc_public_subnets, concat(local.vpc_private_subnets, local.vpc_cluster_private_subnet))
-  subnets         = concat(local.public_subnets, concat(local.private_subnets, local.cluster_private_subnet))
 }
 
 

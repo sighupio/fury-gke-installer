@@ -1,6 +1,6 @@
 <!-- BEGIN_TF_DOCS -->
 
-# Fury GKE Installer - vpc-and-vpn module
+# Fury GKE Installer - vpc module
 
 <!-- <KFD-DOCS> -->
 
@@ -29,23 +29,12 @@
 
 | Name | Description | Default | Required |
 |------|-------------|---------|:--------:|
-| cluster\_control\_plane\_cidr\_block | Private subnet CIDR hosting the GKE control plane | `"10.0.0.0/28"` | no |
 | cluster\_pod\_subnetwork\_cidr | Private subnet CIDR | n/a | yes |
 | cluster\_service\_subnetwork\_cidr | Private subnet CIDR | n/a | yes |
 | cluster\_subnetwork\_cidr | Private subnet CIDR | n/a | yes |
 | name | Name of the resources. Used as cluster name | n/a | yes |
 | private\_subnetwork\_cidrs | Private subnet CIDRs | n/a | yes |
 | public\_subnetwork\_cidrs | Public subnet CIDRs | n/a | yes |
-| tags | A map of tags to add to all resources | `{}` | no |
-| vpn\_dhparams\_bits | Diffie-Hellman (D-H) key size in bytes | `2048` | no |
-| vpn\_instance\_disk\_size | VPN main disk size | `50` | no |
-| vpn\_instance\_type | GCP instance type | `"n1-standard-1"` | no |
-| vpn\_instances | VPN Servers | `1` | no |
-| vpn\_operator\_cidrs | VPN Operator cidrs. Used to log into the instance via SSH | ```[ "0.0.0.0/0" ]``` | no |
-| vpn\_operator\_name | VPN operator name. Used to log into the instance via SSH | `"sighup"` | no |
-| vpn\_port | VPN Server Port | `1194` | no |
-| vpn\_ssh\_users | GitHub users id to sync public rsa keys. eg: jnardiello | n/a | yes |
-| vpn\_subnetwork\_cidr | VPN Subnet CIDR, should be different from the network\_cidr | n/a | yes |
 
 ## Outputs
 
@@ -60,7 +49,6 @@
 | private\_subnets\_cidr\_blocks | List of cidr\_blocks of private subnets |
 | public\_subnets | List of names of public subnets |
 | public\_subnets\_cidr\_blocks | List of cidr\_blocks of public subnets |
-| vpn\_ip | VPN instance IP |
 
 ## Usage
 
@@ -82,8 +70,8 @@ provider "google" {
   zone        = "europe-west1-b"
 }
 
-module "vpc_and_vpn" {
-  source = "../../modules/vpc-and-vpn"
+module "vpc" {
+  source = "../../modules/vpc"
 
   name = "fury"
 
@@ -94,8 +82,6 @@ module "vpc_and_vpn" {
   cluster_service_subnetwork_cidr = "10.3.0.0/16"
   cluster_subnetwork_cidr         = "10.1.0.0/16"
 
-  vpn_subnetwork_cidr = "192.168.200.0/24"
-  vpn_ssh_users       = var.vpn_ssh_users
 }
 ```
 

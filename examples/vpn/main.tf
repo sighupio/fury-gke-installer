@@ -15,17 +15,14 @@ provider "google" {
   zone        = "europe-west1-b"
 }
 
-module "vpc_and_vpn" {
-  source = "../../modules/vpc-and-vpn"
+module "vpn" {
+  source = "../../modules/vpn"
 
   name = "fury"
 
-  public_subnetwork_cidrs  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  private_subnetwork_cidrs = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
-
-  cluster_pod_subnetwork_cidr     = "10.2.0.0/16"
-  cluster_service_subnetwork_cidr = "10.3.0.0/16"
-  cluster_subnetwork_cidr         = "10.1.0.0/16"
+  network = var.network
+  public_subnetworks = var.public_subnetworks
+  public_subnetwork_cidrs = var.public_subnetwork_cidrs
 
   vpn_subnetwork_cidr = "192.168.200.0/24"
   vpn_ssh_users       = var.vpn_ssh_users

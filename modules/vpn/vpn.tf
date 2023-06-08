@@ -5,7 +5,7 @@ data "external" "os" {
 locals {
   os                     = data.external.os.result.os
   local_furyagent        = local.os == "Darwin" ? "${path.module}/bin/furyagent-darwin-amd64" : "${path.module}/bin/furyagent-linux-amd64"
-  openvpn_subnets_routes = [for subnet in local.subnets : { "network" : cidrhost(subnet.subnet_ip, 0), "netmask" : cidrnetmask(subnet.subnet_ip) }]
+  openvpn_subnets_routes = [for public_subnetwork_cidr in var.public_subnetwork_cidrs : { "network" : cidrhost(public_subnetwork_cidr, 0), "netmask" : cidrnetmask(public_subnetwork_cidr) }]
   openvpn_routes         = concat(local.openvpn_subnets_routes, [{ "network" : cidrhost(var.cluster_control_plane_cidr_block, 0), "netmask" : cidrnetmask(var.cluster_control_plane_cidr_block) }])
 
   vpntemplate_vars = {
@@ -45,7 +45,7 @@ locals {
 //INSTANCE RELATED STUFF
 resource "google_compute_firewall" "vpn" {
   name    = "${var.name}-vpn"
-  network = module.vpc.network_name
+  network = var.network
 
   allow {
     protocol = "udp"
@@ -57,7 +57,7 @@ resource "google_compute_firewall" "vpn" {
 
 resource "google_compute_firewall" "icmp" {
   name    = "${var.name}-icmp"
-  network = module.vpc.network_name
+  network = var.network
 
   allow {
     protocol = "icmp"
@@ -68,7 +68,7 @@ resource "google_compute_firewall" "icmp" {
 
 resource "google_compute_firewall" "ssh" {
   name    = "${var.name}-ssh"
-  network = module.vpc.network_name
+  network = var.network
 
   allow {
     protocol = "tcp"
@@ -107,8 +107,8 @@ resource "google_compute_instance" "this" {
   }
 
   network_interface {
-    network    = module.vpc.network_name
-    subnetwork = local.public_subnets[count.index % length(local.public_subnets)].subnet_name
+    network    = var.network
+    subnetwork = var.public_subnetworks[count.index % length(var.public_subnetworks)]
 
     access_config {
       nat_ip = google_compute_address.vpn[count.index].address
@@ -120,7 +120,7 @@ resource "google_compute_instance" "this" {
       "${path.module}/templates/vpn.yml",
       merge(
         local.vpntemplate_vars, {
-          openvpn_dns_servers = [cidrhost(local.public_subnets[count.index % length(local.public_subnets)].subnet_ip, 1)]
+          openvpn_dns_servers = [cidrhost(var.public_subnetwork_cidrs[count.index % length(var.public_subnetwork_cidrs)], 1)]
         }
       )
     )

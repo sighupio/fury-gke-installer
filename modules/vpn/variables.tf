@@ -3,14 +3,18 @@ variable "name" {
   type        = string
 }
 
+variable "network" {
+  type        = string
+  description = "Network name where the Kubernetes cluster will be hosted"
+}
+
 variable "public_subnetwork_cidrs" {
   description = "Public subnet CIDRs"
   type        = list(string)
-
 }
 
-variable "private_subnetwork_cidrs" {
-  description = "Private subnet CIDRs"
+variable "public_subnetworks" {
+  description = "Public subnet names"
   type        = list(string)
 }
 
@@ -18,21 +22,6 @@ variable "cluster_control_plane_cidr_block" {
   description = "Private subnet CIDR hosting the GKE control plane"
   type        = string
   default     = "10.0.0.0/28"
-}
-
-variable "cluster_subnetwork_cidr" {
-  description = "Private subnet CIDR"
-  type        = string
-}
-
-variable "cluster_pod_subnetwork_cidr" {
-  description = "Private subnet CIDR"
-  type        = string
-}
-
-variable "cluster_service_subnetwork_cidr" {
-  description = "Private subnet CIDR"
-  type        = string
 }
 
 variable "tags" {
