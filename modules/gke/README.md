@@ -81,7 +81,7 @@ module "my_cluster" {
   source = "../../modules/gke"
 
   cluster_name    = "fury"
-  cluster_version = "1.25.8-gke.500"
+  cluster_version = "1.25.9-gke.2300"
 
   network         = "fury"
   subnetworks     = ["fury-cluster-subnet", "fury-cluster-pod-subnet", "fury-cluster-service-subnet"]
@@ -118,7 +118,7 @@ module "my_cluster" {
     },
     {
       name: "node-pool-2"
-      version: "1.25.8-gke.500"
+      version: "1.25.9-gke.2300"
       min_size: 1
       max_size: 1
       instance_type: "n1-standard-2"
