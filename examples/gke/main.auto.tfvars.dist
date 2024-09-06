@@ -1,2 +1,6 @@
-gcp_project_id = ""
-ssh_public_key = ""
+gcp_project_id    = ""
+ssh_public_key    = ""
+cluster_name      = "fury"
+cluster_version   = "1.28.13-gke.1024000"
+network_name      = "fury"
+subnetworks_names = ["fury-cluster-subnet", "fury-cluster-pod-subnet" , "fury-cluster-service-subnet"]
