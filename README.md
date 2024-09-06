@@ -19,7 +19,8 @@ The installer is composed of the following terraform modules:
 
 |            Module             |                  Description                   |
 | ----------------------------- | ---------------------------------------------- |
-| [VPC and VPN][vpc-vpn-module] | Deploy the necessary networking infrastructure |
+| [VPC][vpc-module] | Deploy the necessary networking infrastructure |
+| [VPN][vpn-module]             | Deploy a VPN Server to connect to private clusters
 | [GKE][gke-module]             | Deploy the GKE cluster                         |
 
 Click on each module to see its full documentation.
@@ -32,7 +33,7 @@ The GKE installers deploys and configures a production-ready GKE cluster without
 
 The [GKE module][gke-module] deploys a **private control plane** cluster, where the control plane endpoint is not publicly accessible.
 
-The [VPC and VPN module][vpc-vpn-module] setups all the necessary networking infrastructure and a bastion host.
+The [VPC module][vpc-module] setups all the necessary networking infrastructure. The [VPN module][vpn-module] setups one or more bastion hosts with an OpenVPN server.
 
 The bastion host includes a OpenVPN instance easily manageable by using [furyagent][furyagent] to provide access to the cluster.
 
@@ -54,13 +55,15 @@ The bastion host includes a OpenVPN instance easily manageable by using [furyage
 
 To create the cluster via the installers:
 
-1. Use the [VPC and VPN module][vpc-vpn-module] to deploy the networking infrastructure
+1. Use the [VPC module][vpc-module] to deploy the networking infrastructure
 
-2. Configure access to the OpenVPN instance of the bastion host via [furyagent][furyagent]
+2. Use the [VPN module][vpn-module] to deploy the OpenVPN bastion host
 
-3. Connect to the OpenVPN instance
+3. Configure access to the OpenVPN instance of the bastion host via [furyagent][furyagent]
 
-4. Use the [GKE module][gke-module] to deploy the GKE cluster
+4. Connect to the OpenVPN instance
+
+5. Use the [GKE module][gke-module] to deploy the GKE cluster
 
 Please refer to each module documentation and the [examples](examples/) folder for more details.
 
@@ -68,14 +71,15 @@ Please refer to each module documentation and the [examples](examples/) folder f
 
 <!-- Links -->
 
-[vpc-vpn-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/vpc-and-vpn
+[vpc-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/vpc
+[vpn-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/vpn
 [gke-module]: https://github.com/sighupio/fury-gke-installer/tree/master/modules/gke
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
 
 [furyagent]: https://github.com/sighupio/furyagent
 [tunnelblick]: https://tunnelblick.net/downloads.html
 [openvpn-connect]: https://openvpn.net/vpn-client/
-[fury-gke-quickstart]: https://docs.kubernetesfury.com/docs/fury-on-gke
+[fury-gke-quickstart]: https://github.com/sighupio/fury-getting-started/blob/main/legacy/fury-on-gke/
 
 <!-- </KFD-DOCS> -->
 <!-- <FOOTER> -->
