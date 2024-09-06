@@ -3,6 +3,11 @@ variable "vpn_ssh_users" {
   description = "List of ssh users to be added to the VPN instance"
 }
 
+variable "name" {
+  type        = string
+  description = "Common name for the project"
+}
+
 variable "gcp_project_id" {
   type        = string
   description = "Id of the GCP project where to deploy the resources"

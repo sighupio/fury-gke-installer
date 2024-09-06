@@ -18,7 +18,7 @@ provider "google" {
 module "vpn" {
   source = "../../modules/vpn"
 
-  name = "fury"
+  name = var.name
 
   network = var.network
   public_subnetworks = var.public_subnetworks
